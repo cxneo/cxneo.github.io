@@ -13,43 +13,40 @@ theme:
     - search.highlight
     - content.code.copy
   language: zh
-#  palette:
-#    # 浅色模式
-#    - scheme: default
-#      primary: custom
-#      accent: custom
-#      toggle:
-#        icon: material/brightness-7
-#        name: 切换到深色模式
-#    # 深色模式
-#    - scheme: slate
-#      primary: custom
-#      accent: custom
-#      toggle:
-#        icon: material/brightness-4
-#        name: 切换到浅色模式
+  palette:
+    # 浅色模式
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: 切换到深色模式
+    # 深色模式
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: 切换到浅色模式
 
 extra_css:
   - stylesheets/extra.css
   
 nav:
-#  - 首页: index.md
-#  - GNSS Server:
-#      - 前言: gnssserver/前言.md
-#      - 修订记录: gnssserver/修订.md
-#      - 快速开始: gnssserver/快速开始.md
-#      - 连接: gnssserver/连接.md
-#      - 接收机通信: gnssserver/接收机通信.md
-#      - CORS连接: gnssserver/CORS连接.md
-#      - 坐标转换: gnssserver/坐标转换.md
-#      - IMU: gnssserver/IMU.md
-#      - AR放样: gnssserver/AR放样.md
-#      - SLAM集成: gnssserver/SLAM.md
-#      - 常用数据类型: gnssserver/常用数据类型.md
-#  - 测地通二次开发:
-#      - 概述: 测地通二次开发/测地通二次开发.md
-#      - 基于广播消息开发: 测地通二次开发/基于广播消息开发.md
-#      - 基于txt文件开发: 测地通二次开发/基于txt文件开发.md
+  - 首页: index.md
+
+  - Android:
+      - 线程与协程区别: Android/线程与协程区别.md
+
+  - 设计模式:
+      - UML 图: 设计模式/UML 图.md
+      - 设计原则: 设计模式/设计原则.md
+      - 创建型模式: 设计模式/创建型模式.md
+      - 结构型模式: 设计模式/结构型模式.md
+      - 行为型模式: 设计模式/行为型模式.md
+
+  - Git:
+      - Git多账户提交管理: Git/git多账户提交管理.md
 
 #extra:
 #  alternate:
