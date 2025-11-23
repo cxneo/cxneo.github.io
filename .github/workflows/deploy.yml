@@ -42,6 +42,15 @@ jobs:
       run: |
         mkdocs build --site-dir public
     
+    # 验证构建产物（调试用）
+    - name: Verify build output
+      run: |
+        echo "构建产物目录结构："
+        ls -la public/
+        echo ""
+        echo "检查 index.html 是否存在："
+        test -f public/index.html && echo "✓ index.html 存在" || echo "✗ index.html 不存在"
+    
     # 配置 GitHub Pages
     - name: Setup Pages
       uses: actions/configure-pages@v4
