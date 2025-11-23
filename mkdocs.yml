@@ -32,7 +32,7 @@ theme:
 extra_css:
   - stylesheets/extra.css
   
-nav:
+#nav:
   - 首页: index.md
 
   - Android:
@@ -48,14 +48,6 @@ nav:
   - Git:
       - Git多账户提交管理: Git/git多账户提交管理.md
 
-#extra:
-#  alternate:
-#    - name: 中文
-#      link: ../zh/
-#      lang: zh
-#    - name: English
-#      link: ../en/
-#      lang: en
 
 plugins:
   - search:
