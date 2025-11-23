@@ -32,19 +32,16 @@ theme:
 extra_css:
   - stylesheets/extra.css
   
-#nav:
+nav:
   - 首页: index.md
-
   - Android:
       - 线程与协程区别: Android/线程与协程区别.md
-
   - 设计模式:
       - UML 图: 设计模式/UML 图.md
       - 设计原则: 设计模式/设计原则.md
       - 创建型模式: 设计模式/创建型模式.md
       - 结构型模式: 设计模式/结构型模式.md
       - 行为型模式: 设计模式/行为型模式.md
-
   - Git:
       - Git多账户提交管理: Git/git多账户提交管理.md
 
