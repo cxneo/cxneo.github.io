@@ -37,6 +37,7 @@ nav:
   - Android:
       - 线程与协程区别: Android/线程与协程区别.md
       - Android Compose 中的状态: Android/Android Compose 中的状态.md
+      - Flow: Android/Flow.md
   - 设计模式:
       - UML 图: 设计模式/UML 图.md
       - 设计原则: 设计模式/设计原则.md
