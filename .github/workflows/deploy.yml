@@ -19,7 +19,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # 构建作业：负责构建 MkDocs 网站
+  # 构建和部署作业：负责构建 MkDocs 网站并部署到 GitHub Pages
   build:
     runs-on: ubuntu-latest
     steps:
@@ -60,18 +60,8 @@ jobs:
       uses: actions/upload-pages-artifact@v3
       with:
         path: './public'
-  
-  # 部署作业：负责将构建产物部署到 GitHub Pages
-  deploy:
-    # 需要等待构建作业完成
-    needs: build
-    # 指定运行环境为 GitHub Pages
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-    # 部署到 GitHub Pages
+    
+    # 部署到 GitHub Pages（在同一个 job 中完成，避免跨 job 传递 artifact 的问题）
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
