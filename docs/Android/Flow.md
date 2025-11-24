@@ -31,8 +31,8 @@ scope.launch {
 }
 
 suspend fun loadData(): String {
-delay(1000) // 模拟网络
-return "result"
+    delay(1000) // 模拟网络
+    return "result"
 }
 ```
 
@@ -66,10 +66,10 @@ return "result"
 
 类似类比：
 
-| 形式                    | 比喻                     |
-|-------------------------|--------------------------|
-| `suspend fun`           | 点外卖，一次送到        |
-| `Flow<T>`               | 订阅快递，一件件往家送  |
+| 形式            | 比喻          |
+|---------------|-------------|
+| `suspend fun` | 点外卖，一次送到    |
+| `Flow<T>`     | 订阅快递，一件件往家送 |
 
 ### 2.3 Flow 的三要素
 
@@ -92,11 +92,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 fun numbersFlow(): Flow<Int> = flow {
-println("Flow started")
-for (i in 1..5) {
-emit(i)            // 发出一个值
-delay(500)         // 模拟耗时
-}
+    println("Flow started")
+    for (i in 1..5) {
+        emit(i)            // 发出一个值
+        delay(500)         // 模拟耗时
+    }
 }
 ```
 
@@ -129,9 +129,9 @@ val flowFromRange: Flow<Int> = (1..5).asFlow()
 
 ```kotlin
 scope.launch {
-numbersFlow().collect { value ->
-println("received: $value")
-}
+    numbersFlow().collect { value ->
+        println("received: $value")
+    }
 }
 ```
 
@@ -146,11 +146,11 @@ println("received: $value")
 import kotlinx.coroutines.flow.collectLatest
 
 scope.launch {
-numbersFlow().collectLatest { value ->
-println("start handle $value")
-delay(1000)             // 处理很慢
-println("end handle $value")
-}
+    numbersFlow().collectLatest { value ->
+        println("start handle $value")
+        delay(1000)             // 处理很慢
+        println("end handle $value")
+    }
 }
 ```
 
@@ -192,10 +192,10 @@ class MyFragment : Fragment() {
 
 ```kotlin
 val flow = numbersFlow()
-.map { it * 2 }  // 1 -> 2, 2 -> 4 ...
+    .map { it * 2 }  // 1 -> 2, 2 -> 4 ...
 
 scope.launch {
-flow.collect { println(it) }
+    flow.collect { println(it) }
 }
 ```
 
@@ -203,10 +203,10 @@ flow.collect { println(it) }
 
 ```kotlin
 val evenFlow = numbersFlow()
-.filter { it % 2 == 0 }
+    .filter { it % 2 == 0 }
 
 scope.launch {
-evenFlow.collect { println(it) } // 2, 4
+    evenFlow.collect { println(it) } // 2, 4
 }
 ```
 
@@ -214,8 +214,8 @@ evenFlow.collect { println(it) } // 2, 4
 
 ```kotlin
 numbersFlow()
-.take(3)
-.collect { println(it) } // 1, 2, 3
+    .take(3)
+    .collect { println(it) } // 1, 2, 3
 ```
 
 ### 5.4 `distinctUntilChanged`：只在值有变化时才发
@@ -224,7 +224,7 @@ numbersFlow()
 
 ```kotlin
 val flow = flowOf(1, 1, 2, 2, 3)
-.distinctUntilChanged()
+    .distinctUntilChanged()
 
 // 收到：1, 2, 3
 ```
@@ -235,11 +235,11 @@ val flow = flowOf(1, 1, 2, 2, 3)
 val searchFlow: Flow<String> = textChanges() // 假设这是输入文本变化的 Flow
 
 searchFlow
-.debounce(300)    // 300ms 内没有新输入才发出
-.filter { it.isNotBlank() }
-.collectLatest { keyword ->
+    .debounce(300)    // 300ms 内没有新输入才发出
+    .filter { it.isNotBlank() }
+    .collectLatest { keyword ->
 // 只请求最后一次稳定下来的关键字
-}
+    }
 ```
 
 ### 5.6 `flatMapLatest`：只关心最新的子流
@@ -250,19 +250,20 @@ searchFlow
 fun search(keyword: String): Flow<List<Result>> = flow { ... }
 
 searchFlow
-.debounce(300)
-.flatMapLatest { keyword ->
-search(keyword)  // 每个关键字返回一个 Flow
-}
-.collect { resultList ->
+    .debounce(300)
+    .flatMapLatest { keyword ->
+        search(keyword)  // 每个关键字返回一个 Flow
+    }
+    .collect { resultList ->
 // 显示搜索结果
-}
+    }
 ```
 
 - 新关键字来了，旧关键字对应的请求 Flow 会被取消
 - 避免发一堆错乱的请求
 
-> 还有 `flatMapConcat`、`flatMapMerge` 等，可以先有这一个最常用的概念：**flatMapLatest = 最新优先，自动取消旧的**
+> 还有 `flatMapConcat`、`flatMapMerge` 等，可以先有这一个最常用的概念：**flatMapLatest = 最新优先，自动取消旧的
+**
 
 ---
 
@@ -272,10 +273,10 @@ search(keyword)  // 每个关键字返回一个 Flow
 
 ```kotlin
 fun numbersFlow(): Flow<Int> = flow {
-repeat(5) {
-delay(500)
-emit(it)
-}
+    repeat(5) {
+        delay(500)
+        emit(it)
+    }
 }.flowOn(Dispatchers.IO)     // 把上游放到 IO 线程
 ```
 
@@ -286,11 +287,11 @@ emit(it)
 
 ```kotlin
 viewModelScope.launch {
-repository.getUsers()      // Flow<List<User>>
-.flowOn(Dispatchers.IO) // 数据库在 IO 线程
-.collect { users ->     // Main 线程更新 UI
-_uiState.value = users
-}
+    repository.getUsers()      // Flow<List<User>>
+        .flowOn(Dispatchers.IO) // 数据库在 IO 线程
+        .collect { users ->     // Main 线程更新 UI
+            _uiState.value = users
+        }
 }
 ```
 
@@ -310,11 +311,11 @@ _uiState.value = users
 
 ```kotlin
 numbersFlow()
-.buffer()          // 上下游并行，值先缓存到缓冲区
-.collect { value ->
-delay(1000)    // 慢收集
-println(value)
-}
+    .buffer()          // 上下游并行，值先缓存到缓冲区
+    .collect { value ->
+        delay(1000)    // 慢收集
+        println(value)
+    }
 ```
 
 收益：
@@ -325,11 +326,11 @@ println(value)
 
 ```kotlin
 numbersFlow()
-.conflate()
-.collect { value ->
-delay(1000) // 处理很慢
-println(value)
-}
+    .conflate()
+    .collect { value ->
+        delay(1000) // 处理很慢
+        println(value)
+    }
 ```
 
 行为：
@@ -350,13 +351,13 @@ println(value)
 
 ```kotlin
 scope.launch {
-try {
-flowThatMayThrow().collect { value ->
+    try {
+        flowThatMayThrow().collect { value ->
 // ...
-}
-} catch (e: Exception) {
+        }
+    } catch (e: Exception) {
 // 统一处理异常
-}
+    }
 }
 ```
 
@@ -367,20 +368,20 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
 
 flowThatMayThrow()
-.catch { e ->
+    .catch { e ->
 // 只捕获上游（之前）抛出的异常
-emit(defaultValue) // 可以选择发一个兜底值
-}
-.onCompletion { cause ->
-if (cause == null) {
-println("正常完成")
-} else {
-println("异常结束: $cause")
-}
-}
-.collect { value ->
+        emit(defaultValue) // 可以选择发一个兜底值
+    }
+    .onCompletion { cause ->
+        if (cause == null) {
+            println("正常完成")
+        } else {
+            println("异常结束: $cause")
+        }
+    }
+    .collect { value ->
 // ...
-}
+    }
 ```
 
 注意：
@@ -454,7 +455,7 @@ val events = _events.asSharedFlow()
 
 ```kotlin
 viewModelScope.launch {
-_events.emit(UiEvent.ShowToast("Hello"))
+    _events.emit(UiEvent.ShowToast("Hello"))
 }
 ```
 
@@ -462,11 +463,11 @@ _events.emit(UiEvent.ShowToast("Hello"))
 
 ```kotlin
 lifecycleScope.launch {
-viewModel.events.collect { event ->
-when (event) {
-is UiEvent.ShowToast -> showToast(event.message)
-}
-}
+    viewModel.events.collect { event ->
+        when (event) {
+            is UiEvent.ShowToast -> showToast(event.message)
+        }
+    }
 }
 ```
 
@@ -485,8 +486,8 @@ is UiEvent.ShowToast -> showToast(event.message)
 ```kotlin
 @Dao
 interface UserDao {
-@Query("SELECT * FROM user")
-fun getUsers(): Flow<List<User>>
+    @Query("SELECT * FROM user")
+    fun getUsers(): Flow<List<User>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUsers(users: List<User>)
@@ -497,8 +498,8 @@ fun getUsers(): Flow<List<User>>
 
 ```kotlin
 class UserRepository(
-private val api: UserApi,
-private val dao: UserDao,
+    private val api: UserApi,
+    private val dao: UserDao,
 ) {
 
     // 暴露一个冷流，UI 层一直收集
@@ -518,13 +519,13 @@ private val dao: UserDao,
 
 ```kotlin
 data class UserUiState(
-val loading: Boolean = false,
-val users: List<User> = emptyList(),
-val error: String? = null
+    val loading: Boolean = false,
+    val users: List<User> = emptyList(),
+    val error: String? = null
 )
 
 class UserViewModel(
-private val repository: UserRepository
+    private val repository: UserRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UserUiState())
@@ -637,11 +638,11 @@ val flow = liveData.asFlow()
 ```kotlin
 fun heavyFlow(): Flow<Int> = flow {
 // 这里默认在调用 collect 的线程执行
-for (i in 1..1000000) {
+    for (i in 1..1000000) {
 // 大量计算，阻塞主线程
-...
-emit(i)
-}
+        ...
+        emit(i)
+    }
 }
 ```
 
@@ -651,8 +652,8 @@ emit(i)
 
 ```kotlin
 fun heavyFlow(): Flow<Int> =
-flow { ... }
-.flowOn(Dispatchers.Default)
+    flow { ... }
+        .flowOn(Dispatchers.Default)
 ```
 
 ### 12.2 `flowOn` 的位置很重要
@@ -687,10 +688,10 @@ flow { ... }
 
 ```kotlin
 flow
-.onStart { println("start collecting") }
-.onEach { println("value: $it") }
-.onCompletion { println("completed") }
-.collect()
+    .onStart { println("start collecting") }
+    .onEach { println("value: $it") }
+    .onCompletion { println("completed") }
+    .collect()
 ```
 
 ---
